@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <AppContextProvider>
       <HashRouter>
         <App />
-        <Toaster position="top-right" richColors />
+        <Toaster position="top-right" />
       </HashRouter>
     </AppContextProvider>
   </React.StrictMode>

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -13,6 +14,7 @@ import { SiGmail } from "react-icons/si";
 import { VscEye } from "react-icons/vsc";
 // import { IoIosArrowBack } from "react-icons/io";
 import { MdArrowBackIosNew } from "react-icons/md";
+import { IoShareSocial } from "react-icons/io5";
 import {
   CardHeader,
   CardTitle,
@@ -24,51 +26,73 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BackgroundGradient } from "./ui/background-gradient";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import FullSkeleton from "./FullSkeleton";
 
 const FullProfile = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
 
-  console.log("ID IS HERE: ", id)
+  console.log("ID IS HERE: ", id);
 
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
     const fetchProfileById = async () => {
-      setLoading(true); 
+      setLoading(true);
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_GET_PROFILE}/${id}`); 
+        const response = await fetch(
+          `${import.meta.env.VITE_API_GET_PROFILE}/${id}`
+        );
         if (!response.ok) {
-          toast.error('Profile not found');
-          throw new Error('Profile not found'); // Handle non-successful response
+          toast.error("Profile not found");
+          throw new Error("Profile not found"); // Handle non-successful response
         }
         const data = await response.json();
         setProfile(data);
       } catch (error) {
         toast.error("Error fetching profile");
-        console.error('Error fetching profile:', error);
-        navigate('/error');
+        console.error("Error fetching profile:", error);
+        navigate("/error");
       } finally {
         setLoading(false); // Set loading to false regardless of success or failure
       }
     };
 
     fetchProfileById();
-
   }, []);
 
+  const [copied, setCopied] = useState(false);
 
-  return (
-    loading ? (
-      <h1>Loading...</h1>
-    ) : (
+  const handleCopyToClipboard = async () => {
+    try {
+      // Get the current URL from the browser
+      const currentUrl = window.location.href;
+
+      // Use the modern Clipboard API to copy text to clipboard
+      await navigator.clipboard.writeText(currentUrl);
+
+      toast.success("Profile URL Copied");
+      // Set copied state to true
+      setCopied(true);
+
+      // Reset copied state after a short delay
+      setTimeout(() => {
+        setCopied(false);
+      }, 2000);
+    } catch (error) {
+      console.error("Error copying to clipboard:", error);
+    }
+  };
+
+  return loading ? (
+    <FullSkeleton />
+  ) : (
     <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-start max-w-[90vw] md:w-[80vw] px-4 mx-auto py-6">
-      <div className="flex flex-col lg:h-[81vh] gap-6 ">
-        <BackgroundGradient className=" lg:h-[81vh]  bg-black text-white rounded-[22px] ">
-          <Card className="lg:h-[81vh] bg-black text-white rounded-[22px] ">
+      <div className="flex flex-col h-full gap-6 ">
+        <BackgroundGradient className="h-full bg-black text-white rounded-[22px] ">
+          <Card className=" h-full bg-black text-white rounded-[22px] ">
             <CardHeader>
               <CardTitle className="text-xl font-bold flex justify-between">
                 <Button
@@ -94,29 +118,36 @@ const FullProfile = () => {
                 <AvatarFallback>JP</AvatarFallback>
               </Avatar>
               <h2 className="text-2xl font-semibold">{profile.name}</h2>
-              <p className="text-gray-500 dark:text-gray-400 font-mono">
-                {profile.role}
-              </p>
-              <div className="flex flex-wrap gap-2">
+              <p className="text-gray-500 font-mono">{profile.role}</p>
+              <div className="flex flex-wrap gap-2 mb-5">
                 {profile.skills.map((skill, index) => (
                   <Badge
                     key={index}
-                    className="rounded-full px-3 py-1 bg-slate-900"
+                    className="rounded-full px-3 py-1 bg-gray-900 cursor-pointer hover:bg-gray-700 transition-all duration-300"
                   >
                     {skill}
                   </Badge>
                 ))}
               </div>
             </CardContent>
+            <CardFooter className="w-full mt-3">
+              <Button
+                variant="outline"
+                className=" w-full mx-4 py-4 border-slate-600  bg-black border hover:bg-white hover:text-black transition-all duration-500 text-white"
+                onClick={handleCopyToClipboard}
+              >
+                Share Profile <IoShareSocial className="h-4 w-4 mx-2" />
+              </Button>
+            </CardFooter>
           </Card>
         </BackgroundGradient>
       </div>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col justify-between gap-6">
         <BackgroundGradient>
           <Card className="bg-black text-white rounded-[22px]">
             <CardContent className="p-6">
               <h2 className="text-xl font-bold">About Me</h2>
-              <p className="mt-4 text-gray-500 dark:text-gray-400">
+              <p className="mt-4 md:text-lg text-gray-500 dark:text-gray-400">
                 {profile.about}
               </p>
             </CardContent>
@@ -245,7 +276,7 @@ const FullProfile = () => {
           </Card>
         </BackgroundGradient>
       </div>
-    </div>)
+    </div>
   );
 };
 

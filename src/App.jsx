@@ -19,7 +19,7 @@ function App() {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  const getProfiles = async (page = 1, pageSize = 1) => {
+  const getProfiles = async (page = 1, pageSize = 20) => {
     setLoading(true);
     try {
       const url = `${
