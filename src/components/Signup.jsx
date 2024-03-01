@@ -194,7 +194,7 @@ const Signup = () => {
           <input
             name="password"
             value={formData.password}
-            type="password"
+            type={showPassword ? "text" : "password"}
             onChange={changeHandler}
             className=" border-none tracking-widest text-sm placeholder:text-lg placeholder:tracking-widest flex h-9 w-full bg-transparent px-3 py-1 shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
             placeholder="********"
@@ -218,7 +218,7 @@ const Signup = () => {
           <input
             name="confirmPassword"
             value={formData.confirmPassword}
-            type="password"
+            type={showConfirmPassword ? "text" : "password"}
             onChange={changeHandler}
             className=" border-none tracking-widest text-sm placeholder:text-lg placeholder:tracking-widest flex h-9 w-full bg-transparent px-3 py-1 shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
             placeholder="********"
