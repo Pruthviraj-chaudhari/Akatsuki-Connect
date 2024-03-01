@@ -73,7 +73,7 @@ const FullProfile = () => {
       if (navigator.share) {
         await navigator.share({
           title: 'Share Akatsuki Connect Profile',
-          text: "Discover my coding journey on Akatsuki Connect! 🚀\nExplore my profile and join the Akatsuki Coding Club community.\nReady to showcase your skills? Create your own profile now!\n\n",
+          text: "Check out my coding journey on Akatsuki Connect! ❤👨‍💻\nExplore my profile and join the Akatsuki Coding Club community.\n\nReady to showcase your skills? Create your own profile now!\n\n",
           url: currentUrl, 
         });
       } else {
