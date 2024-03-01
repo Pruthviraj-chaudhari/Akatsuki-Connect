@@ -4,9 +4,13 @@ import { Button } from "./ui/button";
 import { useState } from "react";
 import useApiHandler from "@/Hooks/useApiHandler";
 import { checkRequiredFields } from "@/utils/formUtils";
+import { IoEye } from "react-icons/io5";
+import { IoEyeOff } from "react-icons/io5";
 
 const Login = () => {
   const { ApiHandler } = useApiHandler();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -38,7 +42,7 @@ const Login = () => {
 
     ApiHandler({
       apiUrl: LOGIN_API,
-      requestBody: formData, 
+      requestBody: formData,
       loadingMessage,
       successMessage,
       errorMessage,
@@ -93,14 +97,26 @@ const Login = () => {
 
       <div className="mt-3 flex flex-col gap-2">
         <Label>Password</Label>
-        <Input
-          name="password"
-          value={formData.password}
-          type="password"
-          onChange={changeHandler}
-          className="border border-gray-600 tracking-widest text-xl"
-          placeholder="********"
-        ></Input>
+        <div className="flex items-center border border-slate-600 rounded-md border-input">
+          <input
+            name="password"
+            value={formData.password}
+            type={showPassword ? "text" : "password"}
+            onChange={changeHandler}
+            className=" border-none tracking-widest text-sm placeholder:text-lg placeholder:tracking-widest flex h-9 w-full bg-transparent px-3 py-1 shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+            placeholder="********"
+          ></input>
+          <span
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="z-[10] cursor-pointer mr-3"
+          >
+            {showPassword ? (
+              <IoEyeOff className="w-5 h-5" />
+            ) : (
+              <IoEye className="w-5 h-5" />
+            )}
+          </span>
+        </div>
       </div>
 
       <Button

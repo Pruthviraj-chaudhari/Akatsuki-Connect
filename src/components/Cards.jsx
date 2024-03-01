@@ -15,18 +15,36 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { toast } from "sonner";
 
-const Cards = ({
-  profiles,
-  setProfiles,
-  getProfiles,
-  currentPage,
-  setCurrentPage,
-  totalPages,
-  loading,
-  setLoading,
-}) => {
+const Cards = () => {
+  const [profiles, setProfiles] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const getProfiles = async (page = 1, pageSize = 20) => {
+    setLoading(true);
+    try {
+      const url = `${
+        import.meta.env.VITE_API_DATA
+      }?page=${page}&pageSize=${pageSize}`;
+      const response = await fetch(url);
+      const { data, totalPages } = await response.json();
+      setProfiles(data);
+      localStorage.setItem("profiles", JSON.stringify(data));
+      setTotalPages(totalPages);
+    } catch (error) {
+      toast.error("Error fetching profiles");
+      console.error("Error fetching profiles:", error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getProfiles(currentPage);
+  }, []);
 
   useEffect(() => {
     getProfiles(currentPage);
@@ -63,11 +81,9 @@ const Cards = ({
 
   const handleSearch = (event) => {
     event.preventDefault();
-
     const searchTermInput = event.currentTarget.querySelector(
       '[name="searchTerm"]'
     );
-
     if (searchTermInput) {
       setSearchTerm(searchTermInput.value);
     }
@@ -125,13 +141,17 @@ const Cards = ({
           )}
         </div>
       </div>
+
+      {/* pagination */}
       <div className="py-10 w-full">
         <Pagination>
           <PaginationContent>
             <PaginationItem>
-            <PaginationPrevious
+              <PaginationPrevious
                 className={`border-slate-600  bg-black border transition-all duration-500 text-white cursor-pointer ${
-                  currentPage > 1 ? "hover:bg-slate-100 hover:text-black" : "hover:bg-black hover:text-white"
+                  currentPage > 1
+                    ? "hover:bg-slate-100 hover:text-black"
+                    : "hover:bg-black hover:text-white"
                 }`}
                 onClick={() =>
                   setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))
@@ -152,8 +172,10 @@ const Cards = ({
               .map((page) => (
                 <PaginationItem key={page}>
                   <PaginationLink
-                  className={`border-slate-600 bg-black border hover:bg-slate-100 hover:text-black transition-all duration-500 cursor-pointer
-                  text-white ${ currentPage === page ? "bg-white text-black" : ""}`}
+                    className={`border-slate-600 bg-black border hover:bg-slate-100 hover:text-black transition-all duration-500 cursor-pointer
+                  text-white ${
+                    currentPage === page ? "bg-white text-black" : ""
+                  }`}
                     onClick={() => setCurrentPage(page)}
                   >
                     {page}
@@ -170,7 +192,9 @@ const Cards = ({
             <PaginationItem>
               <PaginationNext
                 className={`border-slate-600  bg-black border transition-all duration-500 text-white cursor-pointer ${
-                  currentPage !== totalPages ? "hover:bg-slate-100 hover:text-black" : "hover:bg-black hover:text-white"
+                  currentPage !== totalPages
+                    ? "hover:bg-slate-100 hover:text-black"
+                    : "hover:bg-black hover:text-white"
                 }`}
                 onClick={() =>
                   setCurrentPage((prevPage) =>
