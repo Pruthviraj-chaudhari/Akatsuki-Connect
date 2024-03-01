@@ -65,24 +65,23 @@ const FullProfile = () => {
 
   const [copied, setCopied] = useState(false);
 
-  const handleCopyToClipboard = async () => {
+  const handleShareProfile = async () => {
+
+    const currentUrl = window.location.href;
+
     try {
-      // Get the current URL from the browser
-      const currentUrl = window.location.href;
-
-      // Use the modern Clipboard API to copy text to clipboard
-      await navigator.clipboard.writeText(currentUrl);
-
-      toast.success("Profile URL Copied");
-      // Set copied state to true
-      setCopied(true);
-
-      // Reset copied state after a short delay
-      setTimeout(() => {
-        setCopied(false);
-      }, 2000);
+      if (navigator.share) {
+        await navigator.share({
+          title: 'Share Akatsuki Connect Profile',
+          text: "Join Akatsuki Coding Club on Akatsuki Connect! 🚀 Let's code together and showcase our skills.",
+          url: currentUrl, 
+        });
+      } else {
+        toast.error("Error sharing profile");
+        console.log('Web Share API not supported.');
+      }
     } catch (error) {
-      console.error("Error copying to clipboard:", error);
+      console.error('Error sharing profile:', error);
     }
   };
 
@@ -134,7 +133,7 @@ const FullProfile = () => {
               <Button
                 variant="outline"
                 className=" w-full mx-4 py-4 border-slate-600  bg-black border hover:bg-white hover:text-black transition-all duration-500 text-white"
-                onClick={handleCopyToClipboard}
+                onClick={handleShareProfile}
               >
                 Share Profile <IoShareSocial className="h-4 w-4 mx-2" />
               </Button>
