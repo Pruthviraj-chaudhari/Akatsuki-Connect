@@ -45,6 +45,7 @@ import { Textarea } from "./ui/textarea";
 import { AppContext } from "@/contexts/AppContext";
 import { skillsData, roles, requiredFields } from "../Data";
 import useApiHandler from "@/Hooks/useApiHandler";
+import Cookies from "js-cookie";
 
 function CompleteProfile() {
   const navigate = useNavigate();
@@ -116,7 +117,7 @@ function CompleteProfile() {
     const requestBody = {
       ...formData,
       skills: skillsSelected.length > 0 ? skillsSelected : skills,
-      token: localStorage.getItem("token")
+      token: Cookies.get('token') 
     };
 
     const UPDATE_API = import.meta.env.VITE_API_UPDATE_PROFILE_URL;

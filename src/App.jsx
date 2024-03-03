@@ -10,7 +10,6 @@ import AuthPage from "./components/AuthPage";
 import { AppContext } from "./contexts/AppContext";
 import MyProfile from "./components/MyProfile";
 import CookieConsent from "react-cookie-consent";
-import Cookies from 'js-cookie';
 
 function App() {
   const { isLogin } = useContext(AppContext);
