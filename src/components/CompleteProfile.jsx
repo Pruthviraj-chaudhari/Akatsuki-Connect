@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { MultiSelect } from "react-multi-select-component";
 import { Button } from "@/components/ui/button";
@@ -52,10 +52,6 @@ function CompleteProfile() {
   const { ApiHandler } = useApiHandler();
 
   const { userData } = useContext(AppContext);
-
-  useEffect(() => {
-    console.log("COMPLETE PROFILE: ", userData);
-  }, []);
 
   const {
     name,
@@ -120,6 +116,7 @@ function CompleteProfile() {
     const requestBody = {
       ...formData,
       skills: skillsSelected.length > 0 ? skillsSelected : skills,
+      token: localStorage.getItem("token")
     };
 
     const UPDATE_API = import.meta.env.VITE_API_UPDATE_PROFILE_URL;

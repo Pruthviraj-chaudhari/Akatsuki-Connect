@@ -30,8 +30,8 @@ function useApiHandler() {
           .then((response) => {
             setIsLogin(true);
             setUserData(response.data.student);
-            // Save the token in localStorage
             localStorage.setItem('token', response.data.token);
+            localStorage.removeItem('user');
             localStorage.setItem('user', JSON.stringify(response.data.student));
           })
           .catch((error) => {

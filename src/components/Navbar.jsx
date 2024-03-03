@@ -33,7 +33,6 @@ export function Navbar() {
             <input
               type="text"
               placeholder="Search..."
-              onChange={(e) => console.log("hello")}
               name="search"
               value=""
               className="py-2 text-sm text-white bg-transparent rounded-md pl-10 focus:outline-none "

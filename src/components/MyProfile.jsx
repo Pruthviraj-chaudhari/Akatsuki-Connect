@@ -41,7 +41,6 @@ const MyProfile = () => {
         try {
           const parsedUserData = JSON.parse(storedUserData);
           setUserData(parsedUserData);
-          console.log("USERDATA FOUND IN LOCALSTORAGE")
           setIsLogin(true);
         } catch (error) {
           console.error("Error parsing user data from local storage:", error);

@@ -33,8 +33,6 @@ const FullProfile = () => {
 
   const { id } = useParams();
 
-  console.log("ID IS HERE: ", id);
-
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -78,7 +76,6 @@ const FullProfile = () => {
         });
       } else {
         toast.error("Error sharing profile");
-        console.log('Web Share API not supported.');
       }
     } catch (error) {
       console.error('Error sharing profile:', error);
