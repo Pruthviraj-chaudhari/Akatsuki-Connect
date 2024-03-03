@@ -48,37 +48,6 @@ const Login = () => {
       errorMessage,
       navigateTo,
     });
-
-    // try {
-    //   const promise = () =>
-    //     axios.post(LOGIN_API, formData)
-    //     .then((response) => setUserData(response.data.student))
-    //     .catch((error) => {
-    //         if (error.response) {
-    //           const errorMessage = error.response.data.message;
-    //           throw new Error(errorMessage);
-    //         } else if (error.request) {
-    //           throw new Error("No response from the server");
-    //         } else {
-    //           throw error;
-    //         }
-    //     });
-
-    //   toast.promise(promise(), {
-    //     loading: "Authenticating...",
-    //     success: () => {
-    //       setIsLogin(true);
-    //       navigate("/");
-    //       return toast.success("Welcome to Akatsuki Connect");
-    //     },
-    //     error: (error) => {
-    //       return toast.error(error.message);
-    //     },
-    //   });
-    // } catch (error) {
-    //   console.error("Error occurred:", error);
-    //   toast.error("Error occurred while login");
-    // }
   };
 
   return (

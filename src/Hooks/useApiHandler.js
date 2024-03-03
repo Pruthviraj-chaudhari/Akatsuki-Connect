@@ -22,6 +22,10 @@ function useApiHandler() {
         axios
           .post(apiUrl, requestBody, {
             withCredentials: true,
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${localStorage.getItem('token') || ''}`, // Include the stored token
+            },
           })
           .then((response) => {
             setIsLogin(true);
