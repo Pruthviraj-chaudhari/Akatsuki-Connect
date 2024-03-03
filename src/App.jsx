@@ -15,9 +15,6 @@ import Cookies from 'js-cookie';
 function App() {
   const { isLogin } = useContext(AppContext);
 
-  const handleCookieAccept = () => {
-    Cookies.set('cookieConsent', 'true', { expires: 365 });
-  };
 
   return (
     <>
@@ -44,10 +41,9 @@ function App() {
         <CookieConsent
           location="bottom"
           buttonText="I understand"
-          cookieName="myCookieConsent"
+          cookieName="userCookieConsent"
           style={{ background: "#ffff", color:"black" }}
           buttonStyle={{ background: "black", color: "white", fontSize: "13px" }}
-          onAccept={handleCookieAccept}
           expires={365}
         >
           This website uses cookies to enhance the user experience.
