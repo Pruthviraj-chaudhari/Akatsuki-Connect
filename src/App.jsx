@@ -1,52 +1,46 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import CompleteProfile from "./components/CompleteProfile";
-import Welcome from "./components/Welcome";
+import CompleteProfile from "./pages/UpdateProfile";
+import Welcome from "./pages/Home";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Footer from "./components/Footer";
-import Cards from "./components/Cards";
-import FullProfile from "./components/FullProfile";
-import { useContext } from "react";
-import AuthPage from "./components/AuthPage";
-import { AppContext } from "./contexts/AppContext";
-import MyProfile from "./components/MyProfile";
-import CookieConsent from "react-cookie-consent";
+import Cards from "./pages/Profiles";
+import FullProfile from "./pages/FullProfile";
+import MyProfile from "./pages/MyProfile";
+import LoginPage from "./pages/Login";
+import SignupPage from "./pages/Signup";
+import VerifyEmail from "./pages/VerifyEmail";
+import { useSelector } from "react-redux";
 
 function App() {
-  const { isLogin } = useContext(AppContext);
-
+  const isAuthenticated = useSelector((state) => state.auth.user !== null);
 
   return (
     <>
-    <div className="flex flex-col min-h-screen bg-black bg-grid-white/[0.5] ">
-      <div className="flex-grow flex flex-wrap justify-center items-center lg:pt-6 px-1">
-        <Routes>
-          <Route path="*" element={<Welcome />} />
-          <Route path="/" element={<Welcome />} />
-          <Route path="/profiles" element={<Cards />} />
-          <Route path="/auth" element={<AuthPage />} />
-          <Route path="/myprofile" element={<MyProfile />} />
-          <Route path="/fullprofile/:id" element={<FullProfile />} />
-          {isLogin ? (
-            <Route path="/completeprofile" element={<CompleteProfile />} />
-          ) : (
-            <Route path="/completeprofile" element={<Navigate to="/auth" />} />
-          )}
-        </Routes>
-      </div>
-      <Footer />
-    </div>
-    <div>
-        {/* Your main application content here */}
-        <CookieConsent
-          location="bottom"
-          buttonText="I understand"
-          cookieName="userCookieConsent"
-          style={{ background: "#ffff", color:"black" }}
-          buttonStyle={{ background: "black", color: "white", fontSize: "13px" }}
-          expires={365}
-        >
-          This website uses cookies to enhance the user experience.
-        </CookieConsent>
+      <div className="flex flex-col min-h-screen bg-black bg-grid-white/[0.5] ">
+        <div className="flex-grow flex flex-wrap justify-center items-center lg:pt-6 px-1">
+          <Routes>
+            <Route path="/*" element={<Welcome />} />
+            <Route path="/" element={<Welcome />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/profiles" element={<Cards />} />
+            <Route path="/fullprofile/:id" element={<FullProfile />} />
+            <Route
+              path="/myprofile"
+              element={
+                isAuthenticated ? <MyProfile /> : <Navigate to="/login" />
+              }
+            />
+            <Route
+              path="/completeprofile"
+              element={
+                isAuthenticated ? <CompleteProfile /> : <Navigate to="/login" />
+              }
+            />
+          </Routes>
+        </div>
+        <Footer />
       </div>
     </>
   );
