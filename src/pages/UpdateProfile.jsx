@@ -45,6 +45,7 @@ import { Textarea } from "../components/ui/textarea";
 import { skillsData, roles, requiredFields } from "../Data";
 import { useDispatch, useSelector } from "react-redux";
 import { update } from "@/services/auth";
+import { Navbar } from "@/components/Navbar";
 
 function CompleteProfile() {
   const navigate = useNavigate();
@@ -137,301 +138,304 @@ function CompleteProfile() {
   };
 
   return (
-    <div className="flex justify-center items-center bg-black flex-col mt-3">
-      <Card className="max-w-[80vw] mx-auto w-[100vw]">
-        <CardHeader>
-          <CardTitle className="text-2xl">Hey Akatsuki's ❤️</CardTitle>
-          <CardDescription>Tell us more about you.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form>
-            <div className="flex flex-col sm:flex-row w-full gap-4 gap-x-10 mb-5">
-              <div className="flex flex-col w-full sm:w-1/2 gap-y-4">
-                <div className="flex items-center justify-start gap-4">
-                  <div className="flex flex-col space-y-1.5 w-1/2">
-                    <Label htmlFor="fname">
-                      First Name{" "}
+    <>
+      <Navbar/>
+      <div className="flex justify-center items-center bg-black flex-col mt-[4rem]">
+        <Card className="max-w-[80vw] mx-auto w-[100vw]">
+          <CardHeader>
+            <CardTitle className="text-2xl">Hey Akatsuki's ❤️</CardTitle>
+            <CardDescription>Tell us more about you.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form>
+              <div className="flex flex-col sm:flex-row w-full gap-4 gap-x-10 mb-5">
+                <div className="flex flex-col w-full sm:w-1/2 gap-y-4">
+                  <div className="flex items-center justify-start gap-4">
+                    <div className="flex flex-col space-y-1.5 w-1/2">
+                      <Label htmlFor="fname">
+                        First Name{" "}
+                        {!isProfileComplete && (
+                          <span className="text-red-600">*</span>
+                        )}
+                      </Label>
+                      <Input
+                        id="name"
+                        name="fname"
+                        value={formData.fname}
+                        onChange={changeHandler}
+                        placeholder="John"
+                        required
+                        disabled
+                      />
+                    </div>
+                    <div className="flex flex-col space-y-1.5 w-1/2">
+                      <Label htmlFor="fname">
+                        Last Name{" "}
+                        {!isProfileComplete && (
+                          <span className="text-red-600">*</span>
+                        )}
+                      </Label>
+                      <Input
+                        id="name"
+                        name="lname"
+                        value={formData.lname}
+                        onChange={changeHandler}
+                        placeholder="Doe"
+                        required
+                        disabled
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="email">
+                      Email{" "}
                       {!isProfileComplete && (
                         <span className="text-red-600">*</span>
                       )}
                     </Label>
                     <Input
-                      id="name"
-                      name="fname"
-                      value={formData.fname}
+                      id="email"
+                      name="email"
+                      value={formData.email}
                       onChange={changeHandler}
-                      placeholder="John"
+                      placeholder="example@gmail.com"
                       required
                       disabled
                     />
                   </div>
-                  <div className="flex flex-col space-y-1.5 w-1/2">
-                    <Label htmlFor="fname">
-                      Last Name{" "}
-                      {!isProfileComplete && (
-                        <span className="text-red-600">*</span>
-                      )}
-                    </Label>
-                    <Input
-                      id="name"
-                      name="lname"
-                      value={formData.lname}
-                      onChange={changeHandler}
-                      placeholder="Doe"
-                      required
-                      disabled
+                  <div className="flex flex-col space-y-1.5">
+                    <Label>Skills</Label>
+                    <MultiSelect
+                      options={selectOptions}
+                      value={selectedSkills}
+                      onChange={setSelectedSkills}
+                      labelledBy={"Select"}
+                      isCreatable={true}
+                      className="w-full rounded-lg shadow-sm"
                     />
                   </div>
                 </div>
+                <div className="flex flex-col w-full sm:w-1/2 gap-y-4">
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="role">
+                      Developer Role{" "}
+                      {!isProfileComplete && (
+                        <span className="text-red-600">*</span>
+                      )}
+                    </Label>
+                    <Select
+                      name="role"
+                      value={formData.role}
+                      onValueChange={changeRoleHandler}
+                      required
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select" />
+                      </SelectTrigger>
+                      <SelectContent position="popper">
+                        {roles.map((role, index) => (
+                          <SelectItem value={role} key={index}>
+                            {role}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="about">
+                      About{" "}
+                      {!isProfileComplete && (
+                        <span className="text-red-600">*</span>
+                      )}
+                    </Label>
+                    <Textarea
+                      id="about"
+                      name="about"
+                      value={formData.about}
+                      onChange={changeHandler}
+                      placeholder="I'm a full stack developer..."
+                      rows={5}
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <Label className="text-lg">Social Profiles & Resume</Label>
+              <Separator className="grid grid-cols-1 md:grid-cols-2 mb-5 mt-1" />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 gap-x-10 mb-5">
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="email">
-                    Email{" "}
-                    {!isProfileComplete && (
-                      <span className="text-red-600">*</span>
-                    )}
-                  </Label>
+                  <div className="flex gap-2">
+                    <FiGithub className="" />
+                    <Label htmlFor="github">
+                      GitHub{" "}
+                      {!isProfileComplete && (
+                        <span className="text-red-600">*</span>
+                      )}
+                    </Label>
+                  </div>
                   <Input
-                    id="email"
-                    name="email"
-                    value={formData.email}
+                    id="github"
+                    name="github"
+                    value={formData.github}
                     onChange={changeHandler}
-                    placeholder="example@gmail.com"
+                    placeholder="Your GitHub url"
                     required
-                    disabled
+                    disabled={isProfileComplete ? true : false}
                   />
                 </div>
                 <div className="flex flex-col space-y-1.5">
-                  <Label>Skills</Label>
-                  <MultiSelect
-                    options={selectOptions}
-                    value={selectedSkills}
-                    onChange={setSelectedSkills}
-                    labelledBy={"Select"}
-                    isCreatable={true}
-                    className="w-full rounded-lg shadow-sm"
-                  />
-                </div>
-              </div>
-              <div className="flex flex-col w-full sm:w-1/2 gap-y-4">
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="role">
-                    Developer Role{" "}
-                    {!isProfileComplete && (
-                      <span className="text-red-600">*</span>
-                    )}
-                  </Label>
-                  <Select
-                    name="role"
-                    value={formData.role}
-                    onValueChange={changeRoleHandler}
-                    required
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent position="popper">
-                      {roles.map((role, index) => (
-                        <SelectItem value={role} key={index}>
-                          {role}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="about">
-                    About{" "}
-                    {!isProfileComplete && (
-                      <span className="text-red-600">*</span>
-                    )}
-                  </Label>
-                  <Textarea
-                    id="about"
-                    name="about"
-                    value={formData.about}
+                  <div className="flex gap-2">
+                    <FaLinkedin />
+                    <Label htmlFor="github">
+                      LinkedIn{" "}
+                      {!isProfileComplete && (
+                        <span className="text-red-600">*</span>
+                      )}
+                    </Label>
+                  </div>
+                  <Input
+                    id="linkedin"
+                    name="linkedin"
+                    value={formData.linkedin}
                     onChange={changeHandler}
-                    placeholder="I'm a full stack developer..."
-                    rows={5}
+                    placeholder="Your LinkedIn url"
+                    required
+                    disabled={isProfileComplete ? true : false}
+                  />
+                </div>
+                <div className="flex flex-col space-y-1.5">
+                  <div className="flex gap-2">
+                    <FaInstagram />
+                    <Label htmlFor="github">Instagram</Label>
+                  </div>
+                  <Input
+                    id="instagram"
+                    name="instagram"
+                    value={formData.instagram}
+                    onChange={changeHandler}
+                    placeholder="Your Instagram url"
+                    required
+                  />
+                </div>
+                <div className="flex flex-col space-y-1.5">
+                  <div className="flex gap-2">
+                    <IoLinkSharp />
+                    <Label htmlFor="resume">
+                      Resume Link{" "}
+                      {!isProfileComplete && (
+                        <span className="text-red-600">*</span>
+                      )}
+                    </Label>
+                  </div>
+                  <Input
+                    id="resume"
+                    name="resume"
+                    value={formData.resume}
+                    onChange={changeHandler}
+                    placeholder="https://drive.google.com"
                     required
                   />
                 </div>
               </div>
-            </div>
 
-            <Label className="text-lg">Social Profiles & Resume</Label>
-            <Separator className="grid grid-cols-1 md:grid-cols-2 mb-5 mt-1" />
+              <Label className="text-lg">Coding Profiles</Label>
+              <Separator className="grid grid-cols-1 md:grid-cols-2 mb-5 mt-1" />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 gap-x-10 mb-5">
-              <div className="flex flex-col space-y-1.5">
-                <div className="flex gap-2">
-                  <FiGithub className="" />
-                  <Label htmlFor="github">
-                    GitHub{" "}
-                    {!isProfileComplete && (
-                      <span className="text-red-600">*</span>
-                    )}
-                  </Label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 gap-x-10 mb-5">
+                <div className="flex flex-col space-y-1.5">
+                  <div className="flex gap-2">
+                    <SiLeetcode />
+                    <Label htmlFor="leetcode">
+                      Leetcode{" "}
+                      {!isProfileComplete && (
+                        <span className="text-red-600">*</span>
+                      )}
+                    </Label>
+                  </div>
+                  <Input
+                    id="leetcode"
+                    name="leetcode"
+                    value={formData.leetcode}
+                    onChange={changeHandler}
+                    placeholder="Your Leetcode url"
+                    required
+                  />
                 </div>
-                <Input
-                  id="github"
-                  name="github"
-                  value={formData.github}
-                  onChange={changeHandler}
-                  placeholder="Your GitHub url"
-                  required
-                  disabled={isProfileComplete ? true : false}
-                />
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <div className="flex gap-2">
-                  <FaLinkedin />
-                  <Label htmlFor="github">
-                    LinkedIn{" "}
-                    {!isProfileComplete && (
-                      <span className="text-red-600">*</span>
-                    )}
-                  </Label>
+                <div className="flex flex-col space-y-1.5">
+                  <div className="flex gap-2">
+                    <LiaHackerrank />
+                    <Label htmlFor="hackerrank">HackerRank</Label>
+                  </div>
+                  <Input
+                    id="hackerrank"
+                    name="hackerrank"
+                    value={formData.hackerrank}
+                    onChange={changeHandler}
+                    // placeholder="https://www.hackerrank.com/profile/"
+                    placeholder="Your HackerRank url"
+                    required
+                  />
                 </div>
-                <Input
-                  id="linkedin"
-                  name="linkedin"
-                  value={formData.linkedin}
-                  onChange={changeHandler}
-                  placeholder="Your LinkedIn url"
-                  required
-                  disabled={isProfileComplete ? true : false}
-                />
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <div className="flex gap-2">
-                  <FaInstagram />
-                  <Label htmlFor="github">Instagram</Label>
+                <div className="flex flex-col space-y-1.5">
+                  <div className="flex gap-2">
+                    <SiCodechef />
+                    <Label htmlFor="codechef">CodeChef</Label>
+                  </div>
+                  <Input
+                    id="codechef"
+                    name="codechef"
+                    value={formData.codechef}
+                    onChange={changeHandler}
+                    placeholder="Your CodeChef url"
+                    required
+                  />
                 </div>
-                <Input
-                  id="instagram"
-                  name="instagram"
-                  value={formData.instagram}
-                  onChange={changeHandler}
-                  placeholder="Your Instagram url"
-                  required
-                />
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <div className="flex gap-2">
-                  <IoLinkSharp />
-                  <Label htmlFor="resume">
-                    Resume Link{" "}
-                    {!isProfileComplete && (
-                      <span className="text-red-600">*</span>
-                    )}
-                  </Label>
+                <div className="flex flex-col space-y-1.5">
+                  <div className="flex gap-2">
+                    <SiGeeksforgeeks />
+                    <Label htmlFor="gfg">GFG</Label>
+                  </div>
+                  <Input
+                    id="gfg"
+                    name="gfg"
+                    value={formData.gfg}
+                    onChange={changeHandler}
+                    placeholder="Your GFG url"
+                    required
+                  />
                 </div>
-                <Input
-                  id="resume"
-                  name="resume"
-                  value={formData.resume}
-                  onChange={changeHandler}
-                  placeholder="https://drive.google.com"
-                  required
-                />
               </div>
-            </div>
-
-            <Label className="text-lg">Coding Profiles</Label>
-            <Separator className="grid grid-cols-1 md:grid-cols-2 mb-5 mt-1" />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 gap-x-10 mb-5">
-              <div className="flex flex-col space-y-1.5">
-                <div className="flex gap-2">
-                  <SiLeetcode />
-                  <Label htmlFor="leetcode">
-                    Leetcode{" "}
-                    {!isProfileComplete && (
-                      <span className="text-red-600">*</span>
-                    )}
-                  </Label>
-                </div>
-                <Input
-                  id="leetcode"
-                  name="leetcode"
-                  value={formData.leetcode}
-                  onChange={changeHandler}
-                  placeholder="Your Leetcode url"
-                  required
-                />
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <div className="flex gap-2">
-                  <LiaHackerrank />
-                  <Label htmlFor="hackerrank">HackerRank</Label>
-                </div>
-                <Input
-                  id="hackerrank"
-                  name="hackerrank"
-                  value={formData.hackerrank}
-                  onChange={changeHandler}
-                  // placeholder="https://www.hackerrank.com/profile/"
-                  placeholder="Your HackerRank url"
-                  required
-                />
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <div className="flex gap-2">
-                  <SiCodechef />
-                  <Label htmlFor="codechef">CodeChef</Label>
-                </div>
-                <Input
-                  id="codechef"
-                  name="codechef"
-                  value={formData.codechef}
-                  onChange={changeHandler}
-                  placeholder="Your CodeChef url"
-                  required
-                />
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <div className="flex gap-2">
-                  <SiGeeksforgeeks />
-                  <Label htmlFor="gfg">GFG</Label>
-                </div>
-                <Input
-                  id="gfg"
-                  name="gfg"
-                  value={formData.gfg}
-                  onChange={changeHandler}
-                  placeholder="Your GFG url"
-                  required
-                />
-              </div>
-            </div>
-          </form>
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button variant="outline" onClick={() => navigate(-1)}>
-            Back
-          </Button>
-          <AlertDialog open={open} onOpenChange={setOpen}>
-            <AlertDialogTrigger asChild>
-              <Button type="submit">Submit</Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent className="rounded-lg mx-auto">
-              <AlertDialogHeader>
-                <AlertDialogTitle>Confirm Submission</AlertDialogTitle>
-              </AlertDialogHeader>
-              <AlertDialogDescription>
-                Are you sure you want to submit the form?
-              </AlertDialogDescription>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={submitHandler}>
-                  Continue
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </CardFooter>
-      </Card>
-    </div>
+            </form>
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Button variant="outline" onClick={() => navigate(-1)}>
+              Back
+            </Button>
+            <AlertDialog open={open} onOpenChange={setOpen}>
+              <AlertDialogTrigger asChild>
+                <Button type="submit">Submit</Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent className="rounded-lg mx-auto">
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Confirm Submission</AlertDialogTitle>
+                </AlertDialogHeader>
+                <AlertDialogDescription>
+                  Are you sure you want to submit the form?
+                </AlertDialogDescription>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={submitHandler}>
+                    Continue
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </CardFooter>
+        </Card>
+      </div>
+    </>
   );
 }
 

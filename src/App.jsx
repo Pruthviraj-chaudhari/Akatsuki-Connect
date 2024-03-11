@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.user !== null);
-
   return (
     <>
       <div className="flex flex-col min-h-screen bg-black bg-grid-white/[0.5] ">

@@ -24,6 +24,7 @@ import { MdEdit } from "react-icons/md";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { BackgroundGradient } from "../components/ui/background-gradient";
 import FullSkeleton from "../components/FullSkeleton";
+import { Navbar } from "@/components/Navbar";
 
 const MyProfile = () => {
   const navigate = useNavigate();
@@ -32,11 +33,12 @@ const MyProfile = () => {
 
   if (token === null) navigate("/login");
 
-  return loading ? (
-    <FullSkeleton />
-  ) : (
-    !(Object.keys(user).length === 0) && (
-      <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-start max-w-[90vw] md:w-[80vw] px-4 mx-auto py-6">
+  return (
+    <>
+      <Navbar />
+      {loading ? (
+      <FullSkeleton />) : ( !(Object.keys(user).length === 0) && (
+      <div className="grid lg:grid-cols-2 gap-6 lg:gap-12 items-start max-w-[90vw] md:w-[80vw] px-4 mx-auto mt-[4rem] py-6">
         <div className="flex flex-col h-full gap-6 ">
           <BackgroundGradient className="h-full">
             <Card className="h-full bg-black text-white rounded-[22px] border-none ">
@@ -230,7 +232,8 @@ const MyProfile = () => {
           </BackgroundGradient>
         </div>
       </div>
-    )
+      ) )}
+    </>
   );
 };
 
