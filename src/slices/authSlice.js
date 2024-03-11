@@ -6,8 +6,8 @@ const storedToken = localStorage.getItem("token");
 const initialState = {
   signupData: null,
   loading: false,
-  user: storedUser !== undefined && storedUser !== null ? JSON.parse(storedUser) : null,
-  token: storedToken !== undefined && storedToken !== null ? JSON.parse(storedToken) : null,
+  user: storedUser !== "undefined" && storedUser !== null ? JSON.parse(storedUser) : null,
+  token: storedToken !== "undefined" && storedToken !== null ? JSON.parse(storedToken) : null,
 };
 
 
