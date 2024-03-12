@@ -97,7 +97,7 @@ export function login(email, password, navigate) {
       navigate("/");
     } catch (error) {
       console.log("Auth Service :: Login :: Error", error);
-      toast.error("Cannot Login");
+      toast.error(error.response.data.message);
     }
 
     dispatch(setLoading(false));
