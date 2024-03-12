@@ -14,7 +14,7 @@ const Search = ({profiles, setProfiles}) => {
       if (searchTerm?.length > 0) {
         try {
           dispatch(setLoading(true));
-          const REALM_APP_ID = "application-0-rpjcj";
+          const REALM_APP_ID = import.meta.env.VITE_API_ATLAS_SEARCH;
           const app = new Realm.App({ id: REALM_APP_ID });
           const credentials = Realm.Credentials.anonymous();
           const user = await app.logIn(credentials);
