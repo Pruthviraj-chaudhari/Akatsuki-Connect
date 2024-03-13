@@ -1,6 +1,16 @@
 async function fetchProfilePhoto(profileLink) {
   try {
-    const githubUsername = new URL(profileLink).pathname.split("/")[1];
+    let url;
+
+    // Check if the URL includes a protocol, if not, prepend "https://"
+    if (!profileLink.startsWith("https://")) {
+      url = new URL(`https://${profileLink}`);
+    } else {
+      url = new URL(profileLink);
+    }
+
+    const githubUsername = url.pathname.split("/")[1];
+
     if (!githubUsername) {
       console.error("Invalid GitHub profile link");
       return null;
@@ -9,6 +19,7 @@ async function fetchProfilePhoto(profileLink) {
     const response = await fetch(
       `https://api.github.com/users/${githubUsername}`
     );
+
     if (response.ok) {
       const { avatar_url } = await response.json();
       return avatar_url;
