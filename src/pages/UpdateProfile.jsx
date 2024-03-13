@@ -46,6 +46,7 @@ import { skillsData, roles, requiredFields } from "../Data";
 import { useDispatch, useSelector } from "react-redux";
 import { update } from "@/services/auth";
 import { Navbar } from "@/components/Navbar";
+import fetchProfilePhoto from "@/utils/getGithubProfile";
 
 function CompleteProfile() {
   const navigate = useNavigate();
@@ -113,11 +114,23 @@ function CompleteProfile() {
 
     const skillsSelected = selectedSkills.map((item) => item.label);
 
-    const requestBody = {
+    let requestBody = {
       ...formData,
       skills: skillsSelected.length > 0 ? skillsSelected : skills,
       token,
     };
+
+    if (!isProfileComplete) {
+      const image = await fetchProfilePhoto(formData.github);
+      if (image !== null) {
+        requestBody = {
+          ...formData,
+          image,
+          skills: skillsSelected.length > 0 ? skillsSelected : skills,
+          token,
+        };
+      }
+    }
 
     dispatch(update(requestBody, navigate));
   };
@@ -139,7 +152,7 @@ function CompleteProfile() {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <div className="flex justify-center items-center bg-black flex-col mt-[4rem]">
         <Card className="max-w-[80vw] mx-auto w-[100vw]">
           <CardHeader>

@@ -22,7 +22,7 @@ export function sendOtp(email, navigate) {
       navigate("/verify-email");
     } catch (error) {
       console.log("Auth Service :: Send OTP :: Error", error);
-      toast.error("Could Not Send OTP");
+      toast.error("Could Not Send OTP! Please try again.");
     }
     dispatch(setLoading(false));
     toast.dismiss(toastId);
@@ -61,7 +61,7 @@ export function signUp(
       localStorage.setItem("token", JSON.stringify(response.data.token));
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
-      navigate("/");
+      navigate("/completeprofile");
 
       toast.success("Account Created Sucessfully 🎉");
     } catch (error) {
@@ -140,7 +140,7 @@ export function update(requestBody, navigate){
       navigate("/myprofile");
     } catch (error) {
       console.log("Auth Service :: Login :: Error", error);
-      toast.error("Cannot Updating Profile");
+      toast.error("Can't Update Profile. Please Try Again !");
     }
 
     dispatch(setLoading(false));
