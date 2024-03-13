@@ -3,12 +3,14 @@ import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { NavLink, useNavigate } from "react-router-dom";
 import { LuLogOut } from "react-icons/lu";
 import { logout } from "@/services/auth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Separator } from "./ui/separator";
 
 const MobileNavbar = ({ open, setOpen }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { token } = useSelector((state) => state.auth);
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -39,12 +41,20 @@ const MobileNavbar = ({ open, setOpen }) => {
             <Separator className="mt-1 bg-white/20 h-[1px]" />
           </div>
           <div className="text-center w-full">
+          {
+            ( token !== null) ?
             <NavLink className="text-base hover:text-white/90" to="/myprofile">
               My Profile
+            </NavLink> :
+            <NavLink className="text-base hover:text-white/90" to="/signup">
+              Sign up
             </NavLink>
+          }
             <Separator className="mt-1 bg-white/20 h-[1px]" />
           </div>
           <div className="flex flex-col items-center text-center w-full">
+          {
+            ( token !== null) ? 
             <NavLink className="text-base hover:text-white/90">
               <button
                 className="flex items-center"
@@ -55,7 +65,12 @@ const MobileNavbar = ({ open, setOpen }) => {
                 Logout
                 <LuLogOut className="w-4 h-4 ml-1" />
               </button>
+            </NavLink> : 
+            <NavLink className="text-base hover:text-white/90" to="/login">
+              Log in
             </NavLink>
+          }
+            
             <Separator className="mt-1 bg-white/20 h-[1px]" />
           </div>
 
