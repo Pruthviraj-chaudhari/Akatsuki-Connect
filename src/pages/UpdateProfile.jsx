@@ -137,26 +137,12 @@ function CompleteProfile() {
 
   const changeHandler = (event) => {
     const { name, value } = event.target;
-  
-    // Check if the name corresponds to one of the specific URLs
-    const urlFields = ['github', 'leetcode', 'linkedin', 'instagram', 'resume', 'hackerrank', 'codechef', 'gfg'];
-  
-    // Check if the provided value doesn't start with 'https://'
-    if (urlFields.includes(name)) {
-      const modifiedValue = value.startsWith('https://') ? value : `https://${value}`;
-      setFormData((prev) => ({
-        ...prev,
-        [name]: modifiedValue,
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
-  
-  
 
   const changeRoleHandler = (value) => {
     setFormData((prev) => ({
