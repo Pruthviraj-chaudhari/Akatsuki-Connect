@@ -141,12 +141,12 @@ function CompleteProfile() {
     // Check if the name corresponds to one of the specific URLs
     const urlFields = ['github', 'leetcode', 'linkedin', 'instagram', 'resume', 'hackerrank', 'codechef', 'gfg'];
   
-    // Check if the provided value is not empty and doesn't start with 'https://'
-    if (urlFields.includes(name) && value && !value.startsWith('https://')) {
-      // Prepend 'https://' to the value
+    // Check if the provided value doesn't start with 'https://'
+    if (urlFields.includes(name)) {
+      const modifiedValue = value.startsWith('https://') ? value : `https://${value}`;
       setFormData((prev) => ({
         ...prev,
-        [name]: `https://${value}`,
+        [name]: modifiedValue,
       }));
     } else {
       setFormData((prev) => ({
@@ -155,6 +155,7 @@ function CompleteProfile() {
       }));
     }
   };
+  
   
 
   const changeRoleHandler = (value) => {
