@@ -27,7 +27,7 @@ const Cards = () => {
   const dispatch = useDispatch();
   const {loading} = useSelector((state)=>state.auth);
 
-  const getProfiles = async (page = 1, pageSize = 20) => {
+  const getProfiles = async (page = 1, pageSize = 12) => {
     dispatch(setLoading(true));
     try {
       const url = `${
