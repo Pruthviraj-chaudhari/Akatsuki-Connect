@@ -43,11 +43,11 @@ export function signUp(
     dispatch(setLoading(true));
     try {
       const response = await apiConnector("POST", api.SIGNUP_API, {
-        fname,
-        lname,
-        email,
-        password,
-        confirmPassword,
+        fname: fname.trim(),
+        lname: lname.trim(),
+        email: email.trim(),
+        password: password.trim(),
+        confirmPassword: confirmPassword.trim(),
         otp,
       });
 
@@ -116,16 +116,18 @@ export function logout(navigate) {
   };
 }
 
-
-
 // update service
-export function update(requestBody, navigate){
+export function update(requestBody, navigate) {
   return async (dispatch) => {
     const toastId = toast.loading("Updating Profile...");
     dispatch(setLoading(true));
 
     try {
-      const response = await apiConnector("POST", api.UPDATE_PROFILE_API, requestBody);
+      const response = await apiConnector(
+        "POST",
+        api.UPDATE_PROFILE_API,
+        requestBody
+      );
 
       if (!response.data.success) {
         throw new Error(response.data.message);
