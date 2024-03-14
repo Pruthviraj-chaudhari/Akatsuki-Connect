@@ -163,7 +163,7 @@ const FullProfile = () => {
                       rel="noopener noreferrer"
                     >
                       <FiGithub className="h-5 w-5" />
-                      <span className="text-gray-500 dark:text-gray-400">
+                      <span className="text-gray-500 dark:text-gray-400 hover:text-white transition-all duration-150">
                         Github
                       </span>
                     </a>
@@ -174,7 +174,7 @@ const FullProfile = () => {
                       rel="noopener noreferrer"
                     >
                       <FaLinkedin className="h-5 w-5" />
-                      <span className="text-gray-500 dark:text-gray-400">
+                      <span className="text-gray-500 dark:text-gray-400 hover:text-white transition-all duration-150">
                         LinkedIn
                       </span>
                     </a>
@@ -185,7 +185,7 @@ const FullProfile = () => {
                       rel="noopener noreferrer"
                     >
                       <FaInstagram className="h-5 w-5" />
-                      <span className="text-gray-500 dark:text-gray-400">
+                      <span className="text-gray-500 dark:text-gray-400 hover:text-white transition-all duration-150">
                         Instagram
                       </span>
                     </a>
@@ -194,7 +194,7 @@ const FullProfile = () => {
                       className="flex items-center gap-2"
                     >
                       <SiGmail className="h-5 w-5" />
-                      <span className="text-gray-500 dark:text-gray-400">
+                      <span className="text-gray-500 dark:text-gray-400 hover:text-white transition-all duration-150">
                         Email
                       </span>
                     </a>
@@ -205,7 +205,7 @@ const FullProfile = () => {
                       rel="noopener noreferrer"
                     >
                       <SiLeetcode className="h-5 w-5" />
-                      <span className="text-gray-500 dark:text-gray-400">
+                      <span className="text-gray-500 dark:text-gray-400 hover:text-white transition-all duration-150">
                         LeetCode
                       </span>
                     </a>
@@ -216,7 +216,7 @@ const FullProfile = () => {
                       rel="noopener noreferrer"
                     >
                       <SiGeeksforgeeks className="h-5 w-5" />
-                      <span className="text-gray-500 dark:text-gray-400">
+                      <span className="text-gray-500 dark:text-gray-400 hover:text-white transition-all duration-150">
                         GFG
                       </span>
                     </a>
@@ -227,7 +227,7 @@ const FullProfile = () => {
                       rel="noopener noreferrer"
                     >
                       <SiCodechef className="h-5 w-5" />
-                      <span className="text-gray-500 dark:text-gray-400">
+                      <span className="text-gray-500 dark:text-gray-400 hover:text-white transition-all duration-150">
                         CodeChef
                       </span>
                     </a>
@@ -238,7 +238,7 @@ const FullProfile = () => {
                       rel="noopener noreferrer"
                     >
                       <LiaHackerrank className="h-5 w-5" />
-                      <span className="text-gray-500 dark:text-gray-400">
+                      <span className="text-gray-500 dark:text-gray-400 hover:text-white transition-all duration-150">
                         HackerRank
                       </span>
                     </a>

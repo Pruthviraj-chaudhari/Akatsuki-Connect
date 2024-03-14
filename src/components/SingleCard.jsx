@@ -33,13 +33,13 @@ const ProfileCard = ({ data }) => {
 
           <div className="flex justify-center mt-4">
             <a href={data.github} target="_blank" rel="noopener noreferrer">
-              <FaGithub  className="w-6 h-6 mx-2 "/>
+              <FaGithub  className="w-6 h-6 mx-2 hover:scale-110 transition-all duration-200"/>
             </a>
             <a href={data.leetcode} target="_blank" rel="noopener noreferrer">
-              <SiLeetcode className="w-6 h-6 mx-2"/>
+              <SiLeetcode className="w-6 h-6 mx-2 hover:scale-110 transition-all duration-200"/>
             </a>
             <a href={data.linkedin} target="_blank" rel="noopener noreferrer">
-              <FaLinkedinIn className="w-6 h-6 mx-2"/>
+              <FaLinkedinIn className="w-6 h-6 mx-2 hover:scale-110 transition-all duration-200"/>
             </a>
           </div>
         </CardContent>
