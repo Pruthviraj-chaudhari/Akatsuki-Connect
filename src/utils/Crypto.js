@@ -4,6 +4,11 @@ const encryptionKey = import.meta.env.VITE_API_ENCRYPTION_KEY;
 
 // Function to encrypt the password and confirmPassword
 export const encryptData = (password, confirmPassword) => {
+
+  if(!password || !confirmPassword){
+    return 
+  }
+
   const encryptedPassword = CryptoJS.AES.encrypt(
     password,
     encryptionKey
@@ -17,6 +22,11 @@ export const encryptData = (password, confirmPassword) => {
 
 // Function to decrypt the password and confirmPassword
 export const decryptData = (encryptedData) => {
+
+  if(!encryptedData || encryptedData === null){
+    return 
+  }
+
   const decryptedData = { ...encryptedData };
   // Decrypt password
   decryptedData.password = CryptoJS.AES.decrypt(
