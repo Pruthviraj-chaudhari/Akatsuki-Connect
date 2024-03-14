@@ -31,12 +31,15 @@ export const decryptData = (encryptedData) => {
   // Decrypt password
   decryptedData.password = CryptoJS.AES.decrypt(
     encryptedData.password,
-    "encryptionKey"
+    encryptionKey
   ).toString(CryptoJS.enc.Utf8);
   // Decrypt confirmPassword
   decryptedData.confirmPassword = CryptoJS.AES.decrypt(
     encryptedData.confirmPassword,
-    "encryptionKey"
+    encryptionKey
   ).toString(CryptoJS.enc.Utf8);
+
+  console.log("DECRIPT DATA: ", decryptedData);
+
   return decryptedData;
 };
