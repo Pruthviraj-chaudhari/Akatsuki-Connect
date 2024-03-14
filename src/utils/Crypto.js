@@ -38,8 +38,6 @@ export const decryptData = (encryptedData) => {
     encryptedData.confirmPassword,
     encryptionKey
   ).toString(CryptoJS.enc.Utf8);
-
-  console.log("DECRIPT DATA: ", decryptedData);
-
+  
   return decryptedData;
 };
