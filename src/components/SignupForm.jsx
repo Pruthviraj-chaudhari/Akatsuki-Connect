@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { setSignupData } from "@/slices/authSlice";
 import { sendOtp } from "@/services/auth";
 import { useNavigate } from "react-router-dom";
+import { encryptData } from "@/utils/Crypto";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -64,52 +65,22 @@ const Signup = () => {
       return toast.warning("Invalid Password. Please use a stronger password.");
     }
 
-    dispatch(setSignupData(formData));
+    const { encryptedPassword, encryptedConfirmPassword } = encryptData(
+      formData.password,
+      formData.confirmPassword
+    );
+
+    const encryptedFormData = {
+      ...formData,
+      password: encryptedPassword,
+      confirmPassword: encryptedConfirmPassword,
+    };
+
+    sessionStorage.setItem("signupData", JSON.stringify(encryptedFormData));
+
+    dispatch(setSignupData(encryptedFormData));
+
     dispatch(sendOtp(formData.email, navigate));
-
-    // const requestBody = { email: formData.email };
-    // const SEND_OTP_API = import.meta.env.VITE_API_SEND_OTP_URL;
-    // const loadingMessage = "Sending OTP...";
-    // const successMessage = "OTP has been sent to your email";
-    // const errorMessage = "Error occurred while sending OTP";
-
-    // try {
-    //   const promise = () =>
-    //     axios
-    //       .post(SEND_OTP_API, requestBody, {
-    //         withCredentials: true,
-    //       })
-    //       .then((response) => {
-    //         setIsLogin(true);
-    //         setUserData(response.data.student);
-    //         // Save the token in localStorage
-    //         localStorage.setItem("token", JSON.stringify(response.data.token));
-    //         localStorage.setItem("user", JSON.stringify(response.data.student));
-    //       })
-    //       .catch((error) => {
-    //         if (error.response) {
-    //           const errorMessage = error.response.data.message;
-    //           throw new Error(errorMessage);
-    //         } else if (error.request) {
-    //           throw new Error("No response from the server");
-    //         } else {
-    //           throw error;
-    //         }
-    //       });
-
-    //   toast.promise(promise(), {
-    //     loading: loadingMessage,
-    //     success: () => {
-    //       toast.success(successMessage);
-    //     },
-    //     error: (error) => {
-    //       return toast.error(error.message);
-    //     },
-    //   });
-    // } catch (error) {
-    //   console.error("Error occurred:", error);
-    //   toast.error(errorMessage);
-    // }
   };
 
   return (
@@ -231,11 +202,10 @@ const Signup = () => {
           variant="ghost"
           type="button"
           className="text-white bg-dark border-[1px] border-gray-500"
-          onClick={()=>navigate("/login")}
+          onClick={() => navigate("/login")}
         >
           Login
         </Button>
-
       </div>
     </div>
   );

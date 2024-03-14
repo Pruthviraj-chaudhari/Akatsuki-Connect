@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "@/services/auth";
+import { decryptData } from "@/utils/Crypto";
 
 const VerifyEmail = () => {
     const [otp, setOtp] = useState("");
@@ -22,10 +23,13 @@ const VerifyEmail = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const decryptedSignupData = decryptData(signupData);
+
     const handleSignup = (event) => {
         event.preventDefault();
-        const { fname, lname, email, password, confirmPassword } = signupData;
+        const { fname, lname, email, password, confirmPassword } = decryptedSignupData;
         dispatch(signUp(fname, lname,email,password,confirmPassword,otp,navigate));
+        sessionStorage.removeItem('signupData');
     };
 
     return (
