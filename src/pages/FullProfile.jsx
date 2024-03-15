@@ -22,12 +22,21 @@ import {
   Card,
   CardFooter,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useNavigate, useParams } from "react-router-dom";
 import { BackgroundGradient } from "../components/ui/background-gradient";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import FullSkeleton from "../components/FullSkeleton";
 import { Navbar } from "@/components/Navbar";
+import ImageDialog from "@/components/ImageDialog";
+// import ImageDialog from "@/components/ImageDialog";
 
 const FullProfile = () => {
   const navigate = useNavigate();
@@ -80,6 +89,8 @@ const FullProfile = () => {
     }
   };
 
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <Navbar />
@@ -104,18 +115,12 @@ const FullProfile = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col justify-center items-center gap-4 p-6">
-                  <Avatar className="h-52 w-52">
-                    <AvatarImage
-                      alt={`Profile of ${profile.name}`}
-                      src={
-                        profile.image ||
-                        `https://ui-avatars.com/api/?name=${profile.name}`
-                      }
-                    />
-                    <AvatarFallback>JP</AvatarFallback>
-                  </Avatar>
+
+                  <ImageDialog name={profile.name} image={profile.image} />
+                  
                   <h2 className="text-2xl font-semibold">{profile.name}</h2>
                   <p className="text-gray-500 font-mono">{profile.role}</p>
+
                   <div className="flex flex-wrap gap-2 mb-5">
                     {profile.skills.map((skill, index) => (
                       <Badge
@@ -126,6 +131,7 @@ const FullProfile = () => {
                       </Badge>
                     ))}
                   </div>
+
                 </CardContent>
                 <CardFooter className="w-full mt-3">
                   <Button
