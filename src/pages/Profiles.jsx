@@ -65,7 +65,7 @@ const Cards = () => {
 
         <div className="flex flex-wrap justify-center gap-7 mt-20 my-3 p-6">
           {loading ? (
-            [...Array(8)].map((element) => <LoadingSkeleton key={element} />)
+            [...Array(8)].map((_, index) => <LoadingSkeleton key={index} />)
           ) : profiles.length === 0 ? (
             <h1 className="text-slate-600 text-xl">No results found.</h1>
           ) : (
