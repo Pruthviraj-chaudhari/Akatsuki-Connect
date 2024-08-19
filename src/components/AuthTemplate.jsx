@@ -19,12 +19,12 @@ export default function AuthTemplate({ children }) {
               <div className="flex gap-2 w-full">
                 <img
                   className="w-[100px]"
-                  src="https://i.ibb.co/mb0W3LS/pngegg.png"
+                  src="./logo.png"
                   alt=""
                 />
                 <img
                   className="w-[100px] h-[90px]"
-                  src="https://www.rcpit.ac.in/uploads/1599837268.png"
+                  src="./rcpit.png"
                   alt=""
                 />
               </div>

@@ -28,7 +28,7 @@ export function Navbar({ children }) {
             <CardTitle className="flex justify-center w-full items-center gap-2 lg:text-2xl bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50 tracking-wide">
               <img
                 className="w-[50px]"
-                src="https://i.ibb.co/mb0W3LS/pngegg.png"
+                src="./logo.png"
                 alt=""
               />
               Akatsuki Connect
